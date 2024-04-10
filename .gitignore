@@ -1,3 +1,7 @@
-bin/ 
-obj/ 
-Security/
+Protyo.EmailSubscriptionService/bin/ 
+Protyo.EmailSubscriptionService/obj/ 
+Protyo.Utilities/bin/ 
+Protyo.Utilities/obj/ 
+Protyo.WebService/bin/ 
+Protyo.WebService/obj/ 
+Protyo.EmailSubscriptionService/Security/
