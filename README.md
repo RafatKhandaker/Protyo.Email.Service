@@ -7,7 +7,7 @@ information retrieved from a google-form data responses and then creates a subsc
 The email listing will integrate with an ML Operations infrastructure design solution in AWS, Utilizing Hermes 2 Pro Function-Calling Action model;
 Which will create a Criteria Match case system with LLMs in order to match subscribed Users to a Tiered Level Government Grant Program.
 
-![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/b2965aee-515d-4051-90e4-ec8e8ec9d405)
+![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/f6e10c51-1877-4623-8e87-bf4953875c2b)
 
 ![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/1ec5ada9-c5a7-49b5-a29f-92158c3c109e)
 
