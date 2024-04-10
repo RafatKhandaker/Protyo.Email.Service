@@ -1,4 +1,4 @@
-﻿# Protyo.Email.Service
+﻿# Protyo Email Service
 
 This system is designed within Protyo Organization in order to create a subscription system for Government Grant Programs.
 The Goal and objective of this application is to act as an intermediary middleware worker service system which collects 
