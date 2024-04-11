@@ -1,19 +1,8 @@
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Auth.OAuth2.Flows;
-using Google.Apis.Forms.v1;
-using Google.Apis.Forms.v1.Data;
-using Google.Apis.Services;
-using Google.Apis.Sheets.v4;
-using Google.Apis.Util.Store;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Protyo.EmailSubscriptionService.Models;
 using Protyo.EmailSubscriptionService.Services;
-using Protyo.EmailSubscriptionService.Services.Contracts;
+using Protyo.Utilities.Services.Contracts;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
