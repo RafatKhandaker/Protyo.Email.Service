@@ -18,7 +18,7 @@ with the added files: service-credentials.json file created from a Google API Se
 
 
 
-#Architecture Design 
+# Architecture Design 
 
 Protyo Email Subscription Service, Utilizes Web API Service to Communicate with Stripe API Endpoint. Subscription Service Contact ML Operations LLM Model. 
 Users will Interact with Google forms, which will submit response data of consumer for subscription service.  
