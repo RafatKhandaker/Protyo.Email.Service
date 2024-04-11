@@ -16,3 +16,18 @@ with the added files: service-credentials.json file created from a Google API Se
 
 ![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/70f63c5b-5d0e-481e-b14e-b9de55cb5417)
 
+
+
+#Architecture Design 
+
+Protyo Email Subscription Service, Utilizes Web API Service to Communicate with Stripe API Endpoint. Subscription Service Contact ML Operations LLM Model. 
+Users will Interact with Google forms, which will submit response data of consumer for subscription service.  
+Protyo.DatabaseRefresh will refresh a database job, updating database information from https://Grants.gov to archive grant loan information.
+This information will be fed into the Sage Maker Pipelines for the ML Operations Infrastructure to train ML engineering data for a Grant Matching system using 
+Hermes 2 Function Calling with LLM integration with GPT4. 
+
+Protyo.EmailSubscriptionService will consume sage maker endpoint model data for a list of matching grants for each consumer, 
+combined with the contact information from Google Forms, will generate an HTML formatted Email system to help users subscribe into a matching Grant system.
+
+![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/f8b2869e-c6ec-4dc9-be1e-d166158dfaca)
+
