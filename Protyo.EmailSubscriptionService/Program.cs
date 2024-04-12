@@ -1,10 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Protyo.EmailSubscriptionService.Configuration;
-using Protyo.EmailSubscriptionService.Configuration.Contracts;
-using Protyo.EmailSubscriptionService.Services;
-using Protyo.EmailSubscriptionService.Services.Contracts;
 
+using Protyo.EmailSubscriptionService.Services;
+using Protyo.Utilities.Configuration.Contracts;
+using Protyo.Utilities.Contracts.Configuration;
+using Protyo.Utilities.Services;
+using Protyo.Utilities.Services.Contracts;
 
 namespace Protyo.EmailSubscriptionService
 {
