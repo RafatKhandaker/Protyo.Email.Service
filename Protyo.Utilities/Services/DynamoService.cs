@@ -14,6 +14,8 @@ namespace Protyo.Utilities.Services
         public ScanRequest ScanRequest { get; set; }
         public Table Table { get; set; }
 
+        public Search Search { get; set; }
+
 
         private IConfigurationSetting _configurationSetting;
 
@@ -38,8 +40,14 @@ namespace Protyo.Utilities.Services
         public async Task<QueryResponse> Query(string table, string keyConditionExpression = null, Dictionary<string, AttributeValue> expressionAttributes = null) =>
             await AmazonDynamoDBClient.QueryAsync(new QueryRequest { TableName = table, KeyConditionExpression = keyConditionExpression, ExpressionAttributeValues = expressionAttributes });
 
-        public Search Scan(List<string> attributes) => Table.Scan(new ScanOperationConfig() { AttributesToGet = attributes, Select = SelectValues.SpecificAttributes });
-        public Search ScanAllAttributes() => Table.Scan(new ScanOperationConfig() { Select = SelectValues.AllAttributes });
+        public DynamoService Scan(List<string> attributes) {
+            Search = Table.Scan(new ScanOperationConfig() { AttributesToGet = attributes, Select = SelectValues.SpecificAttributes });
+            return this;
+        }
+        public DynamoService ScanAllAttributes() { 
+            Search = Table.Scan(new ScanOperationConfig() { Select = SelectValues.AllAttributes });
+            return this;
+        } 
 
         public async Task<ScanResponse> Scan() => await AmazonDynamoDBClient.ScanAsync(ScanRequest);
 

@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Protyo.EmailSubscriptionService.Services;
+using Protyo.Utilities.Configuration.Contracts;
+using Protyo.Utilities.Contracts.Configuration;
+using Protyo.Utilities.Helper;
+using Protyo.Utilities.Services;
+using Protyo.Utilities.Services.Contracts;
+
 
 namespace Protyo.WebService
 {
@@ -21,6 +23,13 @@ namespace Protyo.WebService
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                }).ConfigureServices((hostContext, services) =>
+                {
+                    services.AddSingleton<IConfigurationSetting, ConfigSetting>();
+                    services.AddSingleton<IDynamoService, DynamoService>();
+                    services.AddSingleton(typeof(GoogleSheetsHelper));
+                    services.AddScoped(typeof(ObjectExtensionHelper));
+
                 });
     }
 }

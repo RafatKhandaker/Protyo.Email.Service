@@ -34,10 +34,10 @@ namespace Protyo.DatabaseRefresh.Jobs
         public async void Execute(CancellationToken stoppingToken) {
             var firstRun = true;
 
-            var searchGrantObjects = _dynamoService.SetTable("Grants").Scan(new List<string>() { "GrantId" });
+            _dynamoService.SetTable("Grants").Scan(new List<string>() { "GrantId" });
             var grantDocuments = new List<Document>();
 
-            do grantDocuments.AddRange(searchGrantObjects.GetNextSetAsync().Result); while (!searchGrantObjects.IsDone);
+            do grantDocuments.AddRange(_dynamoService.Search.GetNextSetAsync().Result); while (!_dynamoService.Search.IsDone);
 
 
             var listGrantKeys = grantDocuments.Select(s => Convert.ToInt32(s["GrantId"])).ToList();
