@@ -1,15 +1,14 @@
 ﻿using Amazon.DynamoDBv2.DocumentModel;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using Protyo.Utilities.Configuration.Contracts;
 using Protyo.Utilities.Helper;
 using Protyo.Utilities.Models;
 using Protyo.Utilities.Services;
 using Protyo.Utilities.Services.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Protyo.WebService.Controllers
 {
@@ -18,21 +17,23 @@ namespace Protyo.WebService.Controllers
     public class GrantsController : ControllerBase
     {
         private readonly ILogger<GrantsController> _logger;
-        private Cache<GrantDataObject> DynamoDBCache;
+        private Cache<int,GrantDataObject> DynamoDBCache;
         private IDynamoService DynamoService;
+
         public GrantsController(
                 ILogger<GrantsController> logger, 
                 IDynamoService dynamoService, 
-                ObjectExtensionHelper objectExtension
+                ObjectExtensionHelper objectExtension,
+                IConfigurationSetting configuration
             )
         {
             _logger = logger;
             DynamoService = dynamoService;
             DynamoService.SetTable("Grants").ScanAllAttributes();
 
-            DynamoDBCache = new Cache<GrantDataObject>(
+            DynamoDBCache = new Cache<int,GrantDataObject>(
                     () => objectExtension.ConvertDynamoDocumentToDictionary(() => UpdateDynamoDatabase()),
-                    TimeSpan.FromMinutes(5)
+                    TimeSpan.FromMinutes(Convert.ToInt32(configuration.appSettings["DynamoSettings:RefreshTimer"]))
                 );
         }
 
@@ -43,9 +44,18 @@ namespace Protyo.WebService.Controllers
         } 
 
         [HttpGet("All")]
-        public List<GrantDataObject> GetAllGrants()
+        public List<GrantDataObject> GetAllGrants() => DynamoDBCache.GetAll();
+        
+
+        [HttpGet("{id}")]
+        public GrantDataObject GetGrantById([FromRoute] int id) => DynamoDBCache.Get(id);
+        
+
+        [HttpGet("HealthCheck")]
+        public HttpResponse HealthCheck()
         {
-            return DynamoDBCache.GetAll();
+            Response.StatusCode = 200;
+            return Response;
         }
     }
 }

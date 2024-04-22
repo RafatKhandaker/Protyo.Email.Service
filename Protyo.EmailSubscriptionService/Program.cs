@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using Protyo.EmailSubscriptionService.Helper;
 using Protyo.EmailSubscriptionService.Services;
 using Protyo.Utilities.Configuration.Contracts;
 using Protyo.Utilities.Contracts.Configuration;
@@ -24,6 +24,8 @@ namespace Protyo.EmailSubscriptionService
                     services.AddSingleton<IConfigurationSetting, ConfigSetting>();
                     services.AddSingleton<IEmailService, EmailService>();
                     services.AddSingleton(typeof(GoogleSheetsHelper));
+                    services.AddSingleton(typeof(ItemsMapper));
+
                 });
     }
 }

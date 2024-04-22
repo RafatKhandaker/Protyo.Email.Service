@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Protyo.EmailSubscriptionService.Helper;
 using Protyo.EmailSubscriptionService.Services;
 using Protyo.Utilities.Configuration.Contracts;
 using Protyo.Utilities.Contracts.Configuration;

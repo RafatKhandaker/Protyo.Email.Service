@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Protyo.EmailSubscriptionService.Services
 {
-    public static class ItemsMapper
+    public class ItemsMapper
     {
-        public static List<FormData> MapFromRangeData(IList<IList<object>> values)
+        public List<FormData> MapFromRangeData(IList<IList<object>> values)
         {
             var items = new List<FormData>();
             foreach (var value in values)
@@ -33,7 +33,7 @@ namespace Protyo.EmailSubscriptionService.Services
             }
             return items;
         }
-        public static IList<IList<object>> MapToRangeData(FormData item)
+        public IList<IList<object>> MapToRangeData(FormData item)
         {
             var objectList = new List<object>() { item.timestamp, item.companyName, item.companyWebsite, item.yourName, item };
             var rangeData = new List<IList<object>> { objectList };

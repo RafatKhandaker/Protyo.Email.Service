@@ -1,10 +1,12 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Protyo.EmailSubscriptionService.Services;
+using Protyo.EmailSubscriptionService.Helper;
 using Protyo.Utilities.Services.Contracts;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Protyo.Utilities.Configuration.Contracts;
 
 namespace Protyo.EmailSubscriptionService
 {
@@ -13,16 +15,28 @@ namespace Protyo.EmailSubscriptionService
         private readonly ILogger<Worker> _logger;
         private IEmailService _emailService;
         GoogleSheetsHelper _googleSheetsHelper;
+        ItemsMapper _itemsMapper;
 
-        const string SPREADSHEET_ID = "1kJcFdID9MwRQCSSR8UYYWQAW2cOVyLeh69mirqRb4-I";
-        const string SHEET_NAME = "Protyo Subscription Form (Responses)";
+        private string SPREADSHEET_ID;
+        private string SHEET_NAME;
+        private string SHEET_VALUES;
 
-
-        public Worker(ILogger<Worker> logger, IEmailService emailService, GoogleSheetsHelper googleSheetsHelper)
+        public Worker(
+                ILogger<Worker> logger,
+                IEmailService emailService,
+                GoogleSheetsHelper googleSheetsHelper,
+                IConfigurationSetting configuration,
+                ItemsMapper itemMapper
+            )
         {
             _logger = logger;
             _emailService = emailService;
             _googleSheetsHelper = googleSheetsHelper;
+            _itemsMapper = itemMapper;
+
+            SPREADSHEET_ID = configuration.appSettings["GoogleAppSettings:SpreadsheetId"];
+            SHEET_NAME = configuration.appSettings["GoogleAppSettings:SheetName"];
+            SHEET_VALUES = configuration.appSettings["GoogleAppSettings:Values"];
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -42,8 +56,8 @@ namespace Protyo.EmailSubscriptionService
                     executionTime_nine_am = executionTime_nine_am.AddDays(1); // Move to next day
                     executionTime_one_pm = executionTime_one_pm.AddDays(1); // Move to next day
 
-                    var googleSheetValues = ItemsMapper.MapFromRangeData(
-                        _googleSheetsHelper.Service.Spreadsheets.Values.Get(SPREADSHEET_ID, "A:K").Execute().Values
+                    var googleSheetValues = _itemsMapper.MapFromRangeData(
+                        _googleSheetsHelper.Service.Spreadsheets.Values.Get(SPREADSHEET_ID, SHEET_VALUES).Execute().Values
                     );
 
                 }

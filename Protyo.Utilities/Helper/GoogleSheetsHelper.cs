@@ -4,7 +4,7 @@ using Google.Apis.Sheets.v4;
 using System.IO;
 
 
-namespace Protyo.EmailSubscriptionService.Services
+namespace Protyo.EmailSubscriptionService.Helper
 {
     public class GoogleSheetsHelper
     {

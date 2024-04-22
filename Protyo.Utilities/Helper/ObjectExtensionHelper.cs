@@ -44,6 +44,14 @@ namespace Protyo.Utilities.Helper
         }
 
         public Dictionary<TKey, TValue> MergeDictionaries<TKey, TValue>( Dictionary<TKey, TValue> dictionary, Dictionary<TKey, TValue> merger) => dictionary.Concat(merger).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        
+
+        public Dictionary<string, FormData> ConvertGoogleSheetsToDictionary(Func<List<FormData>> googleSheetRetriever)
+        {
+            var dictionaryFormObjects = new Dictionary<string, FormData>();
+            foreach (var data in googleSheetRetriever()) 
+                dictionaryFormObjects.Add(data.email, data);
+
+            return dictionaryFormObjects;
+        }
     }
 }

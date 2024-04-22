@@ -8,16 +8,16 @@ namespace Protyo.Utilities.Services
     using System.Linq;
     using System.Threading;
 
-    public class Cache<T>
+    public class Cache<X,Y>
     {
-        public Dictionary<int, T> CacheStorage { get; set; }
-        private readonly Func<Dictionary<int, T>> _dataRetriever;
+        public Dictionary<X, Y> CacheStorage { get; set; }
+        private readonly Func<Dictionary<X, Y>> _dataRetriever;
         private readonly TimeSpan _refreshInterval;
         private readonly Timer _refreshTimer;
 
         private ObjectExtensionHelper Helper;
 
-        public Cache(Func<Dictionary<int,T>> dataRetriever, TimeSpan refreshInterval)
+        public Cache(Func<Dictionary<X, Y>> dataRetriever, TimeSpan refreshInterval)
         {
             CacheStorage = dataRetriever();
             Helper = new ObjectExtensionHelper();
@@ -28,18 +28,18 @@ namespace Protyo.Utilities.Services
             _refreshTimer = new Timer(RefreshCache, null, TimeSpan.Zero, _refreshInterval);
         }
 
-        public T Get(int key)
+        public Y Get(X key)
         {
             lock (CacheStorage)
             {
                 if (CacheStorage.ContainsKey(key))
                     return CacheStorage[key];
                 
-                return default(T);
+                return default(Y);
             }
         }
 
-        public List<T> GetAll()
+        public List<Y> GetAll()
         {
             lock (CacheStorage)
                 return CacheStorage.Select(s=> s.Value).ToList();
@@ -48,7 +48,7 @@ namespace Protyo.Utilities.Services
         private void RefreshCache(object state)
         {
             lock (CacheStorage)
-                CacheStorage = Helper.MergeDictionaries<int, T>(CacheStorage, _dataRetriever());
+                CacheStorage = Helper.MergeDictionaries<X, Y>(CacheStorage, _dataRetriever());
         }
 
     }
