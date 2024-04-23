@@ -99,15 +99,7 @@ namespace Protyo.DatabaseRefresh.Jobs
         }
         private void ExecuteRecursion(Document document, CancellationToken stoppingToken)
         {
-            try
-            {
-                _dynamoService.SaveDocument("Grants", document);
-            }
-            catch
-            {
-                Task.Delay(1000, stoppingToken);
-                ExecuteRecursion(document, stoppingToken);
-            }
+            try{ _dynamoService.SaveDocument("Grants", document); }catch{ Task.Delay(1000, stoppingToken); ExecuteRecursion(document, stoppingToken); }
         }
 
     }
