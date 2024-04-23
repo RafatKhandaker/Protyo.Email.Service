@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Protyo.Utilities.Models;
 using Newtonsoft.Json;
 using System.Linq;
+using System.IO;
+using System.IO.Compression;
 
 namespace Protyo.Utilities.Helper
 {
@@ -34,7 +36,9 @@ namespace Protyo.Utilities.Helper
                 if (document.ContainsKey("CfdaList"))
                     grantdataObject.CfdaList = document["CfdaList"].AsListOfString();
                 if (document.ContainsKey("details"))
-                    grantdataObject.Details = JsonConvert.DeserializeObject<GrantDetails>(document["details"].AsString());
+                    grantdataObject.Details = (document is byte[])? 
+                        JsonConvert.DeserializeObject<GrantDetails>(DecompressBytes(document["details"].AsByteArray())) 
+                            : JsonConvert.DeserializeObject<GrantDetails>(document["details"].AsString());
            
                 dictionaryGrantObjects.Add(grantdataObject.GrantId.Value, grantdataObject);
             }
@@ -52,6 +56,20 @@ namespace Protyo.Utilities.Helper
                 dictionaryFormObjects.Add(data.email, data);
 
             return dictionaryFormObjects;
+        }
+
+        private string DecompressBytes(byte[] compressedBytes)
+        {
+            using (MemoryStream memoryStream = new MemoryStream(compressedBytes))
+            {
+                using (GZipStream gzipStream = new GZipStream(memoryStream, CompressionMode.Decompress))
+                {
+                    using (StreamReader streamReader = new StreamReader(gzipStream))
+                    {
+                        return streamReader.ReadToEnd();
+                    }
+                }
+            }
         }
     }
 }

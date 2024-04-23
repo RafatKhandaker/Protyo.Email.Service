@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Protyo.DatabaseRefresh.Jobs;
 using Protyo.Utilities.Configuration.Contracts;
 using Protyo.Utilities.Contracts.Configuration;
+using Protyo.Utilities.Helper;
 using Protyo.Utilities.Services;
 using Protyo.Utilities.Services.Contracts;
 using System;
@@ -28,6 +29,7 @@ namespace Protyo.DatabaseRefresh
                     services.AddSingleton<IHttpService, HttpService>();
                     services.AddSingleton(typeof(HttpClient));
                     services.AddSingleton(typeof(GrantAPI_DynamoDB_SyncJob));
+                    services.AddSingleton(typeof(StringCompressionHelper));
 
                 });
     }

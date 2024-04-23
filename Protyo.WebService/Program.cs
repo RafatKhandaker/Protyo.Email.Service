@@ -31,6 +31,7 @@ namespace Protyo.WebService
                     services.AddSingleton(typeof(GoogleSheetsHelper));
                     services.AddScoped(typeof(ObjectExtensionHelper));
                     services.AddScoped(typeof(ItemsMapper));
+
                 });
     }
 }

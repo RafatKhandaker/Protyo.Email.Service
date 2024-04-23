@@ -4,12 +4,14 @@ using Newtonsoft.Json;
 using Protyo.DatabaseRefresh.Jobs.Contracts;
 using Protyo.DatabaseRefresh.Properties;
 using Protyo.Utilities.Configuration.Contracts;
+using Protyo.Utilities.Helper;
 using Protyo.Utilities.Models;
 using Protyo.Utilities.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,11 +24,20 @@ namespace Protyo.DatabaseRefresh.Jobs
         private IHttpService _httpService;
         private IDynamoService _dynamoService;
 
+        private StringCompressionHelper _compression;
+
         private string BaseUrl;
-        public GrantAPI_DynamoDB_SyncJob(ILogger<GrantAPI_DynamoDB_SyncJob> logger, IHttpService httpService, IConfigurationSetting configurationSetting, IDynamoService dynamoService) {
+        public GrantAPI_DynamoDB_SyncJob(
+                ILogger<GrantAPI_DynamoDB_SyncJob> logger,
+                IHttpService httpService,
+                IConfigurationSetting configurationSetting,
+                IDynamoService dynamoService,
+                StringCompressionHelper compression
+            ) {
             _logger = logger;
             _httpService = httpService;
             _dynamoService = dynamoService;
+            _compression = compression;
 
             BaseUrl = configurationSetting.appSettings["GrantAPIConfiguration:BaseUri"].ToString();
         }
@@ -53,7 +64,6 @@ namespace Protyo.DatabaseRefresh.Jobs
                                                                                                  .Result);
 
                 var nonExistantDBGrants = grantsResponseObject.oppHits.Where(w => !listGrantKeys.Contains(w.id.Value));
-                var nonExistantCount = nonExistantDBGrants.Count();
 
                 foreach (var grant in nonExistantDBGrants)
                 {
@@ -69,7 +79,7 @@ namespace Protyo.DatabaseRefresh.Jobs
                         document["CloseDate"] = grant.closeDate;
                         document["OppStatus"] = grant.oppStatus;
                         document["DocType"] = grant.docType;
-                        document["CfdaList"] = grant.cfdaList;
+                        document["CfdaList"] = grant.cfdaList?? new List<string>();
 
                         var collection = new List<KeyValuePair<string, string>> { new("oppId", Convert.ToString(grant.id)) };
 
@@ -81,7 +91,10 @@ namespace Protyo.DatabaseRefresh.Jobs
                                                                             .Result.Content.ReadAsStringAsync()
                                                                                 .Result);
 
-                        document["details"] = JsonConvert.SerializeObject(grantDetailsObject);
+                        var details = JsonConvert.SerializeObject(grantDetailsObject); 
+                        var detailSize = Encoding.UTF8.GetByteCount(details);
+                        document["details"] = (detailSize >= 400000)? _compression.CompressString(details) : details;
+
 
                     }
                     catch (Exception e)
