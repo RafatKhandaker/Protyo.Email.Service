@@ -37,5 +37,23 @@ namespace Protyo.Utilities.Helper
                 }
             }
         }
+
+        public bool TryParseByteArray(string byteArrayString, out byte[] result)
+        {
+            string[] byteStrings = byteArrayString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            result = new byte[byteStrings.Length];
+
+            for (int i = 0; i < byteStrings.Length; i++)
+            {
+                if (!byte.TryParse(byteStrings[i], out result[i]))
+                {
+                    // Parsing failed
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

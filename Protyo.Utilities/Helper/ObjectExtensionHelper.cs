@@ -35,11 +35,15 @@ namespace Protyo.Utilities.Helper
                     grantdataObject.DocType = document["DocType"].AsString();
                 if (document.ContainsKey("CfdaList"))
                     grantdataObject.CfdaList = document["CfdaList"].AsListOfString();
-                if (document.ContainsKey("details"))
-                    grantdataObject.Details = (document is byte[])? 
-                        JsonConvert.DeserializeObject<GrantDetails>(DecompressBytes(document["details"].AsByteArray())) 
-                            : JsonConvert.DeserializeObject<GrantDetails>(document["details"].AsString());
-           
+                if (document.ContainsKey("details")) {
+                    try { 
+                        grantdataObject.Details = JsonConvert.DeserializeObject<GrantDetails>(document["details"].AsString()); 
+                    } 
+                    catch { 
+                        grantdataObject.Details = JsonConvert.DeserializeObject<GrantDetails>(DecompressBytes(document["details"].AsByteArray())); 
+                    }
+                }
+                    
                 dictionaryGrantObjects.Add(grantdataObject.GrantId.Value, grantdataObject);
             }
 
@@ -58,7 +62,7 @@ namespace Protyo.Utilities.Helper
             return dictionaryFormObjects;
         }
 
-        private string DecompressBytes(byte[] compressedBytes)
+        public string DecompressBytes(byte[] compressedBytes)
         {
             using (MemoryStream memoryStream = new MemoryStream(compressedBytes))
             {
