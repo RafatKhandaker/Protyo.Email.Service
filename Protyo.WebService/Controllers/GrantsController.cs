@@ -1,5 +1,4 @@
 ﻿using Amazon.DynamoDBv2.DocumentModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Protyo.Utilities.Configuration.Contracts;
@@ -9,6 +8,8 @@ using Protyo.Utilities.Services;
 using Protyo.Utilities.Services.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Protyo.WebService.Controllers
 {
@@ -39,9 +40,20 @@ namespace Protyo.WebService.Controllers
 
         private List<Document> UpdateDynamoDatabase() {
             var dictionaryGrantObjects = new List<Document>();
-            do dictionaryGrantObjects.AddRange(DynamoService.Search.GetNextSetAsync().Result); while (!DynamoService.Search.IsDone);
+            do ExecuteRecursion(ref dictionaryGrantObjects); while (!DynamoService.Search.IsDone);
             return dictionaryGrantObjects;
-        } 
+        }
+
+        private void ExecuteRecursion(ref List<Document> grantObjects )
+        {
+            try { 
+                grantObjects.AddRange(DynamoService.Search.GetNextSetAsync().Result); 
+            } 
+            catch {
+                Task.Delay(1000);
+                ExecuteRecursion(ref grantObjects);
+             }
+        }
 
         [HttpGet("All")]
         public List<GrantDataObject> GetAllGrants() => DynamoDBCache.GetAll();
@@ -49,13 +61,12 @@ namespace Protyo.WebService.Controllers
 
         [HttpGet("{id}")]
         public GrantDataObject GetGrantById([FromRoute] int id) => DynamoDBCache.Get(id);
-        
+
+        [HttpGet("Funds")]
+        public List<GrantDataObject> GetGrantByMaxAmountFunding([FromQuery] decimal maxAmount) => 
+            DynamoDBCache.GetAll().Where(w => Convert.ToDecimal(w.Details.synopsis.estimatedFunding) > maxAmount ).OrderByDescending(o => Convert.ToDecimal(o.Details.synopsis.estimatedFunding)).ToList();
 
         [HttpGet("HealthCheck")]
-        public HttpResponse HealthCheck()
-        {
-            Response.StatusCode = 200;
-            return Response;
-        }
+        public OkResult HealthCheck() => Ok();
     }
 }

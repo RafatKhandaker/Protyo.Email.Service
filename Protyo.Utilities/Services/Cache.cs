@@ -47,8 +47,10 @@ namespace Protyo.Utilities.Services
 
         private void RefreshCache(object state)
         {
-            lock (CacheStorage)
-                CacheStorage = Helper.MergeDictionaries<X, Y>(CacheStorage, _dataRetriever());
+            lock (CacheStorage) {
+                var merger = _dataRetriever().Where(w => !CacheStorage.Keys.Contains(w.Key)).ToDictionary(x => x.Key, y => y.Value);
+                CacheStorage = Helper.MergeDictionaries<X, Y>(CacheStorage, merger);
+            }
         }
 
     }

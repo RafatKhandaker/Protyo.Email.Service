@@ -30,7 +30,7 @@ namespace Protyo.WebService
                     services.AddSingleton<IDynamoService, DynamoService>();
                     services.AddSingleton(typeof(GoogleSheetsHelper));
                     services.AddScoped(typeof(ObjectExtensionHelper));
-
+                    services.AddScoped(typeof(ItemsMapper));
                 });
     }
 }

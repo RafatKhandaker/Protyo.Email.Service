@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Protyo.EmailSubscriptionService.Helper;
 using Protyo.EmailSubscriptionService.Services;
@@ -10,7 +9,6 @@ using Protyo.Utilities.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Protyo.WebService.Controllers
 {
@@ -54,18 +52,10 @@ namespace Protyo.WebService.Controllers
                 );
         }
 
-        private List<FormData> UpdateGoogleSheets()
-        {
-           var sheetData = _itemsMapper.MapFromRangeData(
-                            _googleSheetsHelper.Service.Spreadsheets.Values.Get(SPREADSHEET_ID, 
-                            SHEET_VALUES.Replace(Convert.ToString(PREV_SHEET_COUNT), Convert.ToString(SHEET_COUNT))
-                        ).Execute().Values
-                    );
-            PREV_SHEET_COUNT = SHEET_COUNT;
-            SHEET_COUNT = sheetData.Count();
-            return sheetData;
-        }
-        
+        private List<FormData> UpdateGoogleSheets() => 
+            _itemsMapper.MapFromRangeData( 
+                _googleSheetsHelper.Service.Spreadsheets.Values.Get(SPREADSHEET_ID, SHEET_VALUES).Execute().Values 
+               );
 
         [HttpGet("All")]
         public List<FormData> GetAllFormData([FromHeader(Name = "access-token")] string token) =>
@@ -73,13 +63,10 @@ namespace Protyo.WebService.Controllers
 
         [HttpGet]
         public FormData GetFormDataForEmail([FromHeader(Name="access-token")] string token, [FromQuery] string email) =>
-            (token.Equals(ACCESS_TOKEN))? GoogleSheetsCache.Get(email) : throw new Exception("Invalid Access Token!");
+            (token.Equals(ACCESS_TOKEN)) ? GoogleSheetsCache.Get(email) : throw new Exception("Invalid Access Token!");
 
         [HttpGet("HealthCheck")]
-        public HttpResponse HealthCheck()
-        {
-            Response.StatusCode = 200;
-            return Response;
-        }
+        public OkResult HealthCheck() => Ok(); 
+        
     }
 }
