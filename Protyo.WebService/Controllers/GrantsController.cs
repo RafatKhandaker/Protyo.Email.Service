@@ -57,15 +57,19 @@ namespace Protyo.WebService.Controllers
         }
 
         [HttpGet("All")]
-        public List<GrantDataObject> GetAllGrants() => DynamoDBCache.GetAll();
+        public List<GrantDataObject> GetAllGrants() => DynamoDBCache.GetAll().Where(w => w.CloseDate > DateTime.Now).ToList();
         
 
         [HttpGet("{id}")]
         public GrantDataObject GetGrantById([FromRoute] int id) => DynamoDBCache.Get(id);
 
         [HttpGet("Funds")]
-        public List<GrantDataObject> GetGrantByMaxAmountFunding([FromQuery] decimal maxAmount) => 
-            DynamoDBCache.GetAll().Where(w => Convert.ToDecimal(w.Details.synopsis.estimatedFunding) <= maxAmount ).OrderByDescending(o => Convert.ToDecimal(o.Details.synopsis.estimatedFunding)).ToList();
+        public List<GrantDataObject> GetGrantBetweenAmountFunding([FromQuery] decimal minAmount, [FromQuery] decimal maxAmount) => 
+            DynamoDBCache.GetAll().Where(s=> s.Details != null && s.Details.synopsis != null && decimal.TryParse(s.Details.synopsis.awardCeiling, out var awardCeiling)  )
+                                    .Where(w => Convert.ToDecimal(w.Details.synopsis.awardFloor) >= minAmount && Convert.ToDecimal(w.Details.synopsis.awardCeiling) <= maxAmount )
+                                        .Where(w => w.CloseDate > DateTime.Now)
+                                            .OrderByDescending(o => Convert.ToDecimal(o.Details.synopsis.awardCeiling))
+                                                    .ToList();
 
         [HttpGet("HealthCheck")]
         public OkResult HealthCheck() => Ok();
