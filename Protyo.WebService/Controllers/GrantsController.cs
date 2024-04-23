@@ -57,8 +57,10 @@ namespace Protyo.WebService.Controllers
         }
 
         [HttpGet("All")]
-        public List<GrantDataObject> GetAllGrants() => DynamoDBCache.GetAll().Where(w => w.CloseDate > DateTime.Now).ToList();
-        
+        public List<GrantDataObject> GetAllGrants() => DynamoDBCache.GetAll();
+
+        [HttpGet("All/Open")]
+        public List<GrantDataObject> GetAllOpenGrants() => DynamoDBCache.GetAll().Where(w => w.CloseDate > DateTime.Now).ToList();
 
         [HttpGet("{id}")]
         public GrantDataObject GetGrantById([FromRoute] int id) => DynamoDBCache.Get(id);
