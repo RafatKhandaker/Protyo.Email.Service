@@ -49,7 +49,8 @@ namespace Protyo.WebService.Controllers
             try { 
                 grantObjects.AddRange(DynamoService.Search.GetNextSetAsync().Result); 
             } 
-            catch {
+            catch(Exception e) {
+                _logger.LogWarning(e.Message);
                 Task.Delay(1000);
                 ExecuteRecursion(ref grantObjects);
              }
@@ -64,7 +65,7 @@ namespace Protyo.WebService.Controllers
 
         [HttpGet("Funds")]
         public List<GrantDataObject> GetGrantByMaxAmountFunding([FromQuery] decimal maxAmount) => 
-            DynamoDBCache.GetAll().Where(w => Convert.ToDecimal(w.Details.synopsis.estimatedFunding) > maxAmount ).OrderByDescending(o => Convert.ToDecimal(o.Details.synopsis.estimatedFunding)).ToList();
+            DynamoDBCache.GetAll().Where(w => Convert.ToDecimal(w.Details.synopsis.estimatedFunding) <= maxAmount ).OrderByDescending(o => Convert.ToDecimal(o.Details.synopsis.estimatedFunding)).ToList();
 
         [HttpGet("HealthCheck")]
         public OkResult HealthCheck() => Ok();
