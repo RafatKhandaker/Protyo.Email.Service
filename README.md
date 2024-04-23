@@ -31,3 +31,14 @@ combined with the contact information from Google Forms, will generate an HTML f
 
 ![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/f8b2869e-c6ec-4dc9-be1e-d166158dfaca)
 
+
+# Protyo Web Service
+
+Protyo Web Service exposes Grant Information for the ML Engineering team to interact with. The Webservice is integrated with a Caching mechanism for both Grants
+and Google Sheets API to save IOP Costs to both AWS & Google Cloud Services. Filters allow ML team to filter quality grants to define more specific cost ranges
+for Grants. Model Schema is available to view on the Web Service, provided by Swagger UI.
+
+![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/4981ac83-6039-4b3c-9f24-9cb9520d4c4e)
+
+![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/104a494d-307e-4ea3-82c6-60fd3aa24c5d)
+
