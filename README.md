@@ -42,3 +42,17 @@ for Grants. Model Schema is available to view on the Web Service, provided by Sw
 
 ![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/104a494d-307e-4ea3-82c6-60fd3aa24c5d)
 
+# Worker Service Jobs
+
+Protyo Worker Service Jobs are designed to run on Windows Server as a Service but can also be scaled into dockerized containers. The Logging information system 
+logs error and information of the worker service jobs and errors into Windows Event Viewer. Easy Management and maintenance of service in any infrastructure environment.
+The Worker Services application runs on windows server as a local background service. Through the Services.msc applet
+
+![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/527e9474-ec1f-4ff3-b273-579a852e4286)
+
+![Uploading image.png…]()
+
+
+
+
+
