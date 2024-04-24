@@ -46,7 +46,9 @@ for Grants. Model Schema is available to view on the Web Service, provided by Sw
 
 Protyo Worker Service Jobs are designed to run on Windows Server as a Service but can also be scaled into dockerized containers. The Logging information system 
 logs error and information of the worker service jobs and errors into Windows Event Viewer. Easy Management and maintenance of service in any infrastructure environment.
-The Worker Services application runs on windows server as a local background service. Through the Services.msc applet
+The Worker Services application runs on windows server as a local background service. Through the Services.msc applet. The Database refresh job is configured to run
+once every 24 hours to check the Grants API database for any updated grant information that is not stored within the inhouse dynamo DB in AWS. The Algorithm in
+Database refresh job will cross validate with existing grant id keys within the database to prevent duplicate records from syncing in house. 
 
 ![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/527e9474-ec1f-4ff3-b273-579a852e4286)
 
