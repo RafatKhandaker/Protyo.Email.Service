@@ -43,6 +43,9 @@ namespace Protyo.DatabaseRefresh.Jobs
         }
 
         public async void Execute(CancellationToken stoppingToken) {
+
+            _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+
             var firstRun = true;
 
             _dynamoService.SetTable("Grants").Scan(new List<string>() { "GrantId" });
@@ -106,7 +109,8 @@ namespace Protyo.DatabaseRefresh.Jobs
                     ExecuteRecursion(document, stoppingToken);
                 }
 
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                firstRun = false;
+
                 await Task.Delay(TimeSpan.FromHours(24), stoppingToken);
             }
         }

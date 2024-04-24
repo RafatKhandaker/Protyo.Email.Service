@@ -8,7 +8,6 @@ using Protyo.Utilities.Models;
 using Protyo.Utilities.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Protyo.WebService.Controllers
 {
