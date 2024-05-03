@@ -57,11 +57,11 @@ namespace Protyo.WebService.Controllers
                );
 
         [HttpGet("All")]
-        public List<FormData> GetAllFormData([FromHeader(Name = "access-token")] string token) =>
-            (token.Equals(ACCESS_TOKEN)) ? GoogleSheetsCache.GetAll() : throw new Exception("Invalid Access Token!");
+        public List<FormData> GetAllFormData([FromHeader(Name = "access-token")] string token, [FromQuery] int page = 1, [FromQuery] int size = 100) =>
+            (token.Equals(ACCESS_TOKEN)) ? GoogleSheetsCache.GetAll(page, size) : throw new Exception("Invalid Access Token!");
 
         [HttpGet]
-        public FormData GetFormDataForEmail([FromHeader(Name="access-token")] string token, [FromQuery] string email) =>
+        public FormData GetFormDataForEmail([FromHeader(Name="access-token")] string token, [FromQuery] string email, [FromQuery] int page = 1, [FromQuery] int size = 100) =>
             (token.Equals(ACCESS_TOKEN)) ? GoogleSheetsCache.Get(email) : throw new Exception("Invalid Access Token!");
 
         [HttpGet("HealthCheck")]

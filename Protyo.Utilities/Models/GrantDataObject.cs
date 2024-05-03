@@ -1,10 +1,12 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 
 namespace Protyo.Utilities.Models
 {
     public class GrantDataObject
     {
+        [BsonId]
         public int? GrantId { get; set; }
 
         public string AgencyCode { get; set; }

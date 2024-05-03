@@ -39,10 +39,10 @@ namespace Protyo.Utilities.Services
             }
         }
 
-        public List<Y> GetAll()
+        public List<Y> GetAll(int page, int size)
         {
             lock (CacheStorage)
-                return CacheStorage.Select(s=> s.Value).ToList();
+                return CacheStorage.Select(s=> s.Value).Skip(page*size).Take(size).ToList();
         }
 
         private void RefreshCache(object state)

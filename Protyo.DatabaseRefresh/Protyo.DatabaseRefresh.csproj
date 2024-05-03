@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+	<Nullable>enable</Nullable>
     <UserSecretsId>dotnet-Protyo.DatabaseRefresh-C0DF0B5A-1CD2-48CC-866F-884243D8988F</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>

@@ -20,7 +20,7 @@ namespace Protyo.Utilities.Models
         public List<FundingInstrument> fundingInstruments { get; set; }
         public List<Agency> agencies { get; set; }
         public string accessKey { get; set; }
-        public List<object> errorMsgs { get; set; }
+        public List<string> errorMsgs { get; set; }
 
     }
 
@@ -116,25 +116,89 @@ namespace Protyo.Utilities.Models
         public AgencyDetails agencyDetails { get; set; }
         public TopAgencyDetails topAgencyDetails { get; set; }
         public List<SynopsisAttachmentFolder> synopsisAttachmentFolders { get; set; }
-        public List<object> synopsisDocumentURLs { get; set; }
-        public List<object> synAttChangeComments { get; set; }
+        public List<SynopsisDocumentURL> synopsisDocumentURLs { get; set; }
+        public List<SynAttChangeComment> synAttChangeComments { get; set; }
         public List<Cfda> cfdas { get; set; }
-        public List<object> opportunityHistoryDetails { get; set; }
+        public List<OpportunityHistoryDetail> opportunityHistoryDetails { get; set; }
         public List<OpportunityPkg> opportunityPkgs { get; set; }
-        public List<object> closedOpportunityPkgs { get; set; }
+        public List<ClosedOpportunityPkg> closedOpportunityPkgs { get; set; }
         public string originalDueDate { get; set; }
         public string originalDueDateDesc { get; set; }
-        public List<object> synopsisModifiedFields { get; set; }
-        public List<object> forecastModifiedFields { get; set; }
-        public List<object> errorMessages { get; set; }
+        public List<string> synopsisModifiedFields { get; set; }
+        public List<string> forecastModifiedFields { get; set; }
+        public List<string> errorMessages { get; set; }
         public bool? synPostDateInPast { get; set; }
         public string docType { get; set; }
         public int? forecastHistCount { get; set; }
         public int? synopsisHistCount { get; set; }
         public bool? assistCompatible { get; set; }
         public string assistURL { get; set; }
-        public List<object> relatedOpps { get; set; }
+        public List<RelatedOpp> relatedOpps { get; set; }
         public string draftMode { get; set; }
+    }
+    public class ClosedOpportunityPkg
+    {
+        public int? id { get; set; }
+        public int? topportunityId { get; set; }
+        public int? familyId { get; set; }
+        public string dialect { get; set; }
+        public string opportunityNumber { get; set; }
+        public string opportunityTitle { get; set; }
+        public string cfdaNumber { get; set; }
+        public string openingDate { get; set; }
+        public string closingDate { get; set; }
+        public string owningAgencyCode { get; set; }
+        public string programTitle { get; set; }
+        public string contactInfo { get; set; }
+        public int? gracePeriod { get; set; }
+        public string competitionId { get; set; }
+        public string competitionTitle { get; set; }
+        public string electronicRequired { get; set; }
+        public int? expectedApplicationCount { get; set; }
+        public int? openToApplicantType { get; set; }
+        public string listed { get; set; }
+        public string isMultiProject { get; set; }
+        public string extension { get; set; }
+        public string mimetype { get; set; }
+        public string lastUpdate { get; set; }
+        public string workspaceCompatibleFlag { get; set; }
+        public string packageId { get; set; }
+        public string openingDateStr { get; set; }
+        public string closingDateStr { get; set; }
+    }
+
+    public class RelatedOpp
+    {
+        public int? sourceOpportunityId { get; set; }
+        public int? opportunityId { get; set; }
+        public string opportunityNum { get; set; }
+        public string opportunityTitle { get; set; }
+        public string agencyCode { get; set; }
+        public string postedDate { get; set; }
+        public string closeDate { get; set; }
+        public string comments { get; set; }
+    }
+
+    public class OppHistId
+    {
+        public int? opportunityId { get; set; }
+        public int? revision { get; set; }
+    }
+    public class OpportunityHistoryDetail
+    {
+        public OppHistId oppHistId { get; set; }
+        public int? opportunityId { get; set; }
+        public int? revision { get; set; }
+        public string opportunityNumber { get; set; }
+        public string opportunityTitle { get; set; }
+        public string owningAgencyCode { get; set; }
+        public string publisherUid { get; set; }
+        public string listed { get; set; }
+        public OpportunityCategory opportunityCategory { get; set; }
+        public Synopsis synopsis { get; set; }
+        public List<Cfda> cfdas { get; set; }
+        public List<string> synopsisModifiedFields { get; set; }
+        public List<string> forecastModifiedFields { get; set; }
     }
 
     public class AgencyDetails
@@ -246,7 +310,14 @@ namespace Protyo.Utilities.Models
         public string postingDateStr { get; set; }
         public string createTimeStampStr { get; set; }
     }
-
+    public class SynopsisDocumentURL
+    {
+        public int? id { get; set; }
+        public int? opportunityId { get; set; }
+        public string docUrl { get; set; }
+        public string description { get; set; }
+        public string createdDate { get; set; }
+    }
     public class SynopsisAttachment
     {
         public int? id { get; set; }
@@ -279,6 +350,22 @@ namespace Protyo.Utilities.Models
         public string agencyCode { get; set; }
         public string topAgencyCode { get; set; }
     }
+
+    public class SynAttChangeComment
+    {
+        public Id id { get; set; }
+        public string changeComments { get; set; }
+    }
+
+    public class Id
+    {
+        public int? opportunityId { get; set; }
+        public string attType { get; set; }
+        public string createdDate { get; set; }
+        public string attTypeDesc { get; set; }
+        public string commentsDate { get; set; }
+    }
+
 
 
 }

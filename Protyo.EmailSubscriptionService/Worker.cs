@@ -7,36 +7,19 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Protyo.Utilities.Configuration.Contracts;
+using Protyo.EmailSubscriptionService.Jobs.Contract;
 
 namespace Protyo.EmailSubscriptionService
 {
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private IEmailService _emailService;
-        GoogleSheetsHelper _googleSheetsHelper;
-        ItemsMapper _itemsMapper;
+        private ISubscriberJob _subscriberJob;
 
-        private string SPREADSHEET_ID;
-        private string SHEET_NAME;
-        private string SHEET_VALUES;
-
-        public Worker(
-                ILogger<Worker> logger,
-                IEmailService emailService,
-                GoogleSheetsHelper googleSheetsHelper,
-                IConfigurationSetting configuration,
-                ItemsMapper itemMapper
-            )
+        public Worker( ILogger<Worker> logger, ISubscriberJob subscriberJob )
         {
             _logger = logger;
-            _emailService = emailService;
-            _googleSheetsHelper = googleSheetsHelper;
-            _itemsMapper = itemMapper;
-
-            SPREADSHEET_ID = configuration.appSettings["GoogleAppSettings:SpreadsheetId"];
-            SHEET_NAME = configuration.appSettings["GoogleAppSettings:SheetName"];
-            SHEET_VALUES = configuration.appSettings["GoogleAppSettings:Values"];
+            _subscriberJob = subscriberJob;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -56,10 +39,7 @@ namespace Protyo.EmailSubscriptionService
                     executionTime_nine_am = executionTime_nine_am.AddDays(1); // Move to next day
                     executionTime_one_pm = executionTime_one_pm.AddDays(1); // Move to next day
 
-                    var googleSheetValues = _itemsMapper.MapFromRangeData(
-                        _googleSheetsHelper.Service.Spreadsheets.Values.Get(SPREADSHEET_ID, SHEET_VALUES).Execute().Values
-                    );
-
+                    _subscriberJob.Execute();
                 }
 
                 await Task.Delay(TimeSpan.FromHours(24), stoppingToken); // Delay for 24 hours

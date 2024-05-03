@@ -6,6 +6,7 @@ using Protyo.EmailSubscriptionService.Services;
 using Protyo.Utilities.Configuration.Contracts;
 using Protyo.Utilities.Contracts.Configuration;
 using Protyo.Utilities.Helper;
+using Protyo.Utilities.Models;
 using Protyo.Utilities.Services;
 using Protyo.Utilities.Services.Contracts;
 
@@ -28,6 +29,7 @@ namespace Protyo.WebService
                 {
                     services.AddSingleton<IConfigurationSetting, ConfigSetting>();
                     services.AddSingleton<IDynamoService, DynamoService>();
+                    services.AddSingleton<IMongoService<GrantDataObject>, MongoService<GrantDataObject>>();
                     services.AddSingleton(typeof(GoogleSheetsHelper));
                     services.AddScoped(typeof(ObjectExtensionHelper));
                     services.AddScoped(typeof(ItemsMapper));
