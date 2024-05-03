@@ -57,7 +57,9 @@ Database refresh job will cross validate with existing grant id keys within the 
 ![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/5765a685-5b7b-4600-92f1-dc047a9ea0b6)
 
 
-
+# Email Subscription Service
+The Email Subscription service is a worker service job and running the process will send an html formatted email to the list of subscribers collected from the google forms
+![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/bbd908ca-9371-4375-abee-63fcfb0f6891)
 
 
 
