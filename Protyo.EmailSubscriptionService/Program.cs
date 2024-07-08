@@ -9,6 +9,7 @@ using Protyo.Utilities.Configuration.Contracts;
 using Protyo.Utilities.Contracts.Configuration;
 using Protyo.Utilities.Services;
 using Protyo.Utilities.Services.Contracts;
+using System.Configuration;
 
 namespace Protyo.EmailSubscriptionService
 {
@@ -31,10 +32,15 @@ namespace Protyo.EmailSubscriptionService
                     services.AddSingleton(typeof(ItemsMapper));
 
                 }).ConfigureLogging(loggingBuilder => {
-                    loggingBuilder.AddDebug().AddEventLog(eventLogSettings => {
-                        eventLogSettings.SourceName = "Protyo.EmailSubscriptionService";
-                        eventLogSettings.LogName = "Application";
-                    });
+                    // Windows Event Viewer Configuration
+                    /*loggingBuilder.AddDebug().AddEventLog(eventLogSettings => {
+                          eventLogSettings.SourceName = "Protyo.EmailSubscriptionService";
+                          eventLogSettings.LogName = "Application";
+                        });*/
+                    loggingBuilder
+                        .AddDebug()
+                        .AddConsole()
+                        .SetMinimumLevel(LogLevel.Information);
                 });
     }
 }

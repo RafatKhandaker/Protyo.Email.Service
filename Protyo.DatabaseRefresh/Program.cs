@@ -32,10 +32,14 @@ namespace Protyo.DatabaseRefresh
                             services.AddSingleton(typeof(StringCompressionHelper));
 
                         }).ConfigureLogging(loggingBuilder => {
-                            loggingBuilder.AddDebug().AddEventLog(eventLogSettings => {
-                                    eventLogSettings.SourceName = "Protyo.DatabaseRefresh";
-                                    eventLogSettings.LogName = "Application";
-                            });
+                            /*   loggingBuilder.AddDebug().AddEventLog(eventLogSettings => {
+                                       eventLogSettings.SourceName = "Protyo.DatabaseRefresh";
+                                       eventLogSettings.LogName = "Application";
+                               });*/
+                            loggingBuilder
+                                 .AddDebug()
+                                 .AddConsole()
+                                 .SetMinimumLevel(LogLevel.Information);
                         });
         
     }

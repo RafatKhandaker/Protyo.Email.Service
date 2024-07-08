@@ -36,6 +36,7 @@ namespace Protyo.Utilities.Services
             using (var client = new SmtpClient(_smtpServer, _smtpPort))
             {
                 client.EnableSsl = true; // Enable SSL/TLS
+                client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
                 client.UseDefaultCredentials = false;
                 client.Credentials = new NetworkCredential(_smtpUsername, _smtpPassword);
 

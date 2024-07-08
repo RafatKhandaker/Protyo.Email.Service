@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
-
+﻿
 
 namespace Protyo.DatabaseRefresh.Jobs
 {
-    using Amazon.DynamoDBv2.DocumentModel;
     using global::Protyo.DatabaseRefresh.Jobs.Contracts;
     using global::Protyo.DatabaseRefresh.Properties;
     using global::Protyo.Utilities.Configuration.Contracts;
@@ -18,7 +15,6 @@ namespace Protyo.DatabaseRefresh.Jobs
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -134,7 +130,13 @@ namespace Protyo.DatabaseRefresh.Jobs
             }
             private void ExecuteRecursion(GrantDataObject document, CancellationToken stoppingToken)
             {
-                try { _mongoService.InsertOne(document); } catch { Task.Delay(1000, stoppingToken); ExecuteRecursion(document, stoppingToken); }
+                try { 
+                    _mongoService.InsertOne(document); 
+                } 
+                catch(Exception e){
+                    _logger.LogInformation($"Exception: {e.Message}", DateTimeOffset.Now);
+                    Task.Delay(1000, stoppingToken); ExecuteRecursion(document, stoppingToken); 
+                }
             }
 
         }

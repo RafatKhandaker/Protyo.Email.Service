@@ -49,27 +49,28 @@ namespace Protyo.EmailSubscriptionService.Jobs
             var grantIds = new int[] { 353888, 353909, 353907, 353906, 353908 };
             var grantList = new List<GrantDataObject>();
 
-            using (HttpClient client = new HttpClient())
-            {
-                foreach (var grant in grantIds) 
-                {
-                    try
-                    {
-                        var response = await client.GetAsync($"http://ec2-18-207-218-255.compute-1.amazonaws.com/Grants/{grant}");
+            /* using (HttpClient client = new HttpClient())
+             {
+                 foreach (var grant in grantIds) 
+                 {
+                     try
+                     {
+                         var response = await client.GetAsync($"http://ec2-18-207-218-255.compute-1.amazonaws.com/Grants/{grant}");
 
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var responseBody = await response.Content.ReadAsStringAsync();
-                            var grantObject = JsonConvert.DeserializeObject<GrantDataObject>(responseBody);
+                         if (response.IsSuccessStatusCode)
+                         {
+                             var responseBody = await response.Content.ReadAsStringAsync();
+                             var grantObject = JsonConvert.DeserializeObject<GrantDataObject>(responseBody);
 
-                            grantList.Add(grantObject);
-                        }
-                    }
-                    catch (Exception ex) { continue; }
-                }
-            }
+                             grantList.Add(grantObject);
+                         }
+                     }
+                     catch (Exception ex) { continue; }
+                 }
+             }*/
 
-            _emailService.emailListing = googleSheetValues.Select(s => s.email).ToList();
+            //  _emailService.emailListing = googleSheetValues.Select(s => s.email).Skip(1).ToList();
+            _emailService.emailListing = new string[] { "rafat.khandaker@gmail.com", "aleef@protyo.com", "mbarnett@protyo.com", "dbennett@protyo.com", "epetersen@protyo.com" };
 
             _emailService.sendHtmlFromFilePath("Test Grant System", PathToHtml);
 

@@ -42,7 +42,7 @@ namespace Protyo.Utilities.Services
         public List<Y> GetAll(int page, int size)
         {
             lock (CacheStorage)
-                return CacheStorage.Select(s=> s.Value).Skip(page*size).Take(size).ToList();
+                return CacheStorage.Select(s=> s.Value).Skip((page -1)*size).Take(size).ToList();
         }
 
         private void RefreshCache(object state)
