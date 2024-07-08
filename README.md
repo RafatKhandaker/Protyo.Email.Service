@@ -10,7 +10,7 @@ Which will create a Criteria Match case system with LLMs in order to match subsc
 This Open Source application will not run without a Security folder: Protyo.EmailService/Security  
 with the added files: service-credentials.json file created from a Google API Service Account 
 
-g
+
 ![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/f6e10c51-1877-4623-8e87-bf4953875c2b)
 
 ![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/1ec5ada9-c5a7-49b5-a29f-92158c3c109e)
