@@ -72,4 +72,6 @@ The Email Subscription service is a worker service job and running the process w
 ![image](https://github.com/RafatKhandaker/Protyo.Email.Service/assets/19369242/bbd908ca-9371-4375-abee-63fcfb0f6891)
 
 
+#Comprehensive Guide to Dockerize .NET applications into containerized instances and deploy to AWS ECS (Elastic Container Service) Integrating ECR (Image Repository)
+https://www.youtube.com/watch?v=hWyPbsahc6s&t=7s
 
