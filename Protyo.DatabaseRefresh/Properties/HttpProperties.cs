@@ -34,5 +34,10 @@ namespace Protyo.DatabaseRefresh.Properties
                     { "sec-ch-ua-platform", "\"Windows\"" }
 
             };
+
+        public static Dictionary<string, string> formGetHeaders(string token) => new Dictionary<string, string> {
+                    { "Accept", "application/json, text/plain, */*" },
+                    { "access-token", token }
+            };
     }
 }

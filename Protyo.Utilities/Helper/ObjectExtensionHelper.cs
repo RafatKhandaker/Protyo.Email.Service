@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.IO;
 using System.IO.Compression;
+using MongoDB.Bson;
 
 namespace Protyo.Utilities.Helper
 {
@@ -58,6 +59,15 @@ namespace Protyo.Utilities.Helper
                 dictionaryGrantObjects.Add(document.GrantId.Value, document);
             
             return dictionaryGrantObjects;
+        }
+
+        public Dictionary<long, UserDataObject> ConvertMongoDBDocumentToDictionary(Func<List<UserDataObject>> mongoDocumentRetriever)
+        {
+            var dictionaryUserObjects = new Dictionary<long, UserDataObject>();
+            foreach (var document in mongoDocumentRetriever())
+                dictionaryUserObjects.Add( BitConverter.ToInt64(document._Id.ToByteArray()) , document);
+
+            return dictionaryUserObjects;
         }
 
         public Dictionary<TKey, TValue> MergeDictionaries<TKey, TValue>( Dictionary<TKey, TValue> dictionary, Dictionary<TKey, TValue> merger) => dictionary.Concat(merger).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);

@@ -1,13 +1,10 @@
 ﻿using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Protyo.Utilities.Services.Contracts
 {
-    public interface IMongoService<T> 
+    public interface IMongoService<T>
     {
         public MongoService<T> SetDatabase(string databaseName);
         public MongoService<T> SetCollections(string collection);

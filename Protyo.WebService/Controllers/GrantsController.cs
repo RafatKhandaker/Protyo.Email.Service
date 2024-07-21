@@ -33,7 +33,7 @@ namespace Protyo.WebService.Controllers
 
             MongoDBCache = new Cache<int, GrantDataObject>(
                     () => objectExtension.ConvertMongoDBDocumentToDictionary(() => UpdateMongoDatabase()),
-                    TimeSpan.FromMinutes(Convert.ToInt32(configuration.appSettings["DynamoSettings:RefreshTimer"]))
+                    TimeSpan.FromMinutes(Convert.ToInt32(configuration.appSettings["Database:RefreshTimer"]))
                 );
         }
 

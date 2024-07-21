@@ -25,9 +25,11 @@ namespace Protyo.DatabaseRefresh
                             services.AddSingleton<IConfigurationSetting, ConfigSetting>();
                             services.AddSingleton<IDynamoService, DynamoService>();
                             services.AddSingleton<IMongoService<GrantDataObject>, MongoService<GrantDataObject>>();
+                            services.AddSingleton<IMongoService<UserDataObject>, MongoService<UserDataObject>>();
                             services.AddSingleton<IHttpService, HttpService>();
                             services.AddSingleton(typeof(HttpClient));
                             services.AddSingleton(typeof(GrantAPI_DynamoDB_SyncJob));
+                            services.AddSingleton(typeof(GrantAPI_GSheetDB_SyncJob));
                             services.AddSingleton(typeof(GrantAPI_MongoDB_SyncJob));
                             services.AddSingleton(typeof(StringCompressionHelper));
 

@@ -2,7 +2,6 @@
 using Protyo.Utilities.Configuration.Contracts;
 using Protyo.Utilities.Services.Contracts;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Protyo.Utilities.Services
 {
@@ -12,6 +11,7 @@ namespace Protyo.Utilities.Services
         private MongoClient Client { get; set; }
         private IMongoDatabase Database { get; set; }
         private IMongoCollection<T> Collections { get; set; }
+
         public MongoService(IConfigurationSetting configuration) {
             _configurationSetting = configuration;
             Client = new MongoClient( MongoClientSettings.FromUrl( new MongoUrl(_configurationSetting.appSettings["MongoSettings:Url"]) ) );
@@ -33,8 +33,8 @@ namespace Protyo.Utilities.Services
         
         public List<T> Find(FilterDefinition<T> filter) =>  Collections.Find<T>(filter).ToListAsync().Result;
 
-        public long Update(FilterDefinition<T> updateFilter, UpdateDefinition<T> update) => Collections.UpdateOneAsync(updateFilter, update).Result.ModifiedCount;
-
+        public long Update(FilterDefinition<T> updateFilter, UpdateDefinition<T> update) => Collections.UpdateOneAsync(updateFilter, update, new UpdateOptions { IsUpsert = true }).Result.ModifiedCount;
+       
         public long Delete(FilterDefinition<T> filter ) => Collections.DeleteOneAsync(filter).Result.DeletedCount;
     }
 }
