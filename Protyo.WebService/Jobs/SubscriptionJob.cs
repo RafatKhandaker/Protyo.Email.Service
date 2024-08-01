@@ -41,7 +41,7 @@ namespace Protyo.WebService.Jobs
             };
         }
 
-        public Session CreateSubscriptionSession(Utilities.Models.stripe.Subscription request) {
+        public Session CreateSubscriptionSession(Utilities.Models.stripe.SubscriptionPost request) {
             var options = new SessionCreateOptions
             {
                 LineItems = new List<SessionLineItemOptions>

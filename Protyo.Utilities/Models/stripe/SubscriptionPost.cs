@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Protyo.Utilities.Models.stripe
 {
-    public class Subscription
+    public class SubscriptionPost
     {
-        [JsonProperty("platformId")]
-        public string platformId { get; set;}
 
         [JsonProperty("clientId")]
         public string clientId { get; set; }

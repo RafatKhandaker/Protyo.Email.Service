@@ -17,7 +17,7 @@ namespace Protyo.WebService.Jobs.Contracts
 
         public ConfigResponse ReturnConfigResponse();
 
-        public Session CreateSubscriptionSession(Utilities.Models.stripe.Subscription request);
+        public Session CreateSubscriptionSession(Utilities.Models.stripe.SubscriptionPost request);
 
         public SessionService CreateSessionService(string sessionId);
 

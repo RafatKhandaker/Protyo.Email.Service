@@ -26,7 +26,7 @@ namespace Protyo.WebService.Controllers
 
 
         [HttpPost("create-subscription-session")]
-        public async Task<Session> CreateSubscriptionSession([FromBody] Subscription request)
+        public async Task<Session> CreateSubscriptionSession([FromBody] SubscriptionPost request)
             => this.subscriptionJob.CreateSubscriptionSession(request);
 
 

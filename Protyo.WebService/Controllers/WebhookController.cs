@@ -6,7 +6,7 @@ using System.IO;
 namespace Protyo.WebService.Controllers
 {
     [ApiController]
-    [Microsoft.AspNetCore.Components.Route("[controller]")]
+    [Route("Webhook")]
     public class WebhookController : ControllerBase
     {
         private ISubscriptionJob SubscriptionJob;
