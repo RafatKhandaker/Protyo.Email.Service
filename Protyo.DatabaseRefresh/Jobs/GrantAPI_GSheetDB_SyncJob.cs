@@ -48,6 +48,8 @@ namespace Protyo.DatabaseRefresh.Jobs
 
         public async void Execute(CancellationToken stoppingToken)
         {
+            _logger.LogInformation("Worker running (Google Sheets Sync Job) at: {time}", DateTimeOffset.Now);
+
             var formDataResonse = JsonConvert.DeserializeObject<List<FormData>>(
                                                 _httpService.Initialize(BaseUrl + "All" + "?page=" + PageNumber + "&size=" + DataSize, HttpMethod.Get)
                                                                 .AddHeaders(HttpProperties.formGetHeaders(WebAccessToken))

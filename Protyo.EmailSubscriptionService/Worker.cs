@@ -1,12 +1,8 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Protyo.EmailSubscriptionService.Services;
-using Protyo.EmailSubscriptionService.Helper;
-using Protyo.Utilities.Services.Contracts;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Protyo.Utilities.Configuration.Contracts;
 using Protyo.EmailSubscriptionService.Jobs.Contract;
 
 namespace Protyo.EmailSubscriptionService

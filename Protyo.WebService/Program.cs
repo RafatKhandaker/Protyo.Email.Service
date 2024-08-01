@@ -30,6 +30,7 @@ namespace Protyo.WebService
                     services.AddSingleton<IConfigurationSetting, ConfigSetting>();
                     services.AddSingleton<IDynamoService, DynamoService>();
                     services.AddSingleton<IMongoService<GrantDataObject>, MongoService<GrantDataObject>>();
+                    services.AddSingleton<IMongoService<UserDataObject>, MongoService<UserDataObject>>();
                     services.AddSingleton(typeof(GoogleSheetsHelper));
                     services.AddScoped(typeof(ObjectExtensionHelper));
                     services.AddScoped(typeof(ItemsMapper));

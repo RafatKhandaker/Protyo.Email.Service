@@ -30,7 +30,15 @@ namespace Protyo.DatabaseRefresh
         protected override async Task ExecuteAsync(CancellationToken stoppingToken) => Run(stoppingToken);
 
         private void Run(CancellationToken stoppingToken) {
-            try { foreach (var j in _jobs) j.Execute(stoppingToken); } catch (Exception e) { _logger.LogError(e.Message); }
+            try {
+
+                Parallel.Invoke(
+                        ()=> _jobs[0].Execute(stoppingToken),
+                        ()=> _jobs[1].Execute(stoppingToken)
+                    );
+
+            } catch (Exception e) { _logger.LogError(e.Message); }
+             
         }
     }
 }

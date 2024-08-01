@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-
+using System.Collections.Generic;
 
 namespace Protyo.Utilities.Models
 {
@@ -21,6 +21,9 @@ namespace Protyo.Utilities.Models
         public string? picture { get; set; }
 
         public FormData formInput { get; set; }
+
+        public List<GrantMatch> grantMatches { get; set; }
+
 
     }
 }

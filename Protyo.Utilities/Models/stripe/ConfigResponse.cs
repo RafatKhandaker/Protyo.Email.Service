@@ -1,0 +1,16 @@
+﻿using Newtonsoft.Json;
+
+namespace Protyo.Utilities.Models.stripe
+{
+    public class ConfigResponse
+    {
+        [JsonProperty("publishableKey")]
+        public string PublishableKey { get; set; }
+
+        [JsonProperty("proPrice")]
+        public string ProPrice { get; set; }
+
+        [JsonProperty("basicPrice")]
+        public string BasicPrice { get; set; }
+    }
+}

@@ -27,14 +27,19 @@ namespace Protyo.Utilities.Services
             return this;
         }
 
-        public List<T> RetrieveAll() => Collections.Find<T>(_ => true).ToListAsync().Result;
+        public List<T> RetrieveAll() => 
+            Collections.Find<T>(_ => true).ToListAsync().Result;
 
-        public async void InsertOne(T entity) => await Collections.InsertOneAsync(entity);
+        public async void InsertOne(T entity) => 
+            await Collections.InsertOneAsync(entity);
         
-        public List<T> Find(FilterDefinition<T> filter) =>  Collections.Find<T>(filter).ToListAsync().Result;
+        public List<T> Find(FilterDefinition<T> filter) =>  
+            Collections.Find<T>(filter).ToListAsync().Result;
 
-        public long Update(FilterDefinition<T> updateFilter, UpdateDefinition<T> update) => Collections.UpdateOneAsync(updateFilter, update, new UpdateOptions { IsUpsert = true }).Result.ModifiedCount;
+        public long Update(FilterDefinition<T> updateFilter, UpdateDefinition<T> update) => 
+            Collections.UpdateOneAsync(updateFilter, update, new UpdateOptions { IsUpsert = true }).Result.ModifiedCount;
        
-        public long Delete(FilterDefinition<T> filter ) => Collections.DeleteOneAsync(filter).Result.DeletedCount;
+        public long Delete(FilterDefinition<T> filter ) => 
+            Collections.DeleteOneAsync(filter).Result.DeletedCount;
     }
 }

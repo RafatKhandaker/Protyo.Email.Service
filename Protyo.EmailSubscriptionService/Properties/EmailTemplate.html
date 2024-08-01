@@ -3,62 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Company - Newsletter</title>
+    <title>Grant Gov AI Newsletter</title>
     <style>
-        /* CSS styles for email */
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
             margin: 0;
             padding: 0;
+            background-color: #f4f4f4;
         }
 
         .container {
-            max-width: 600px;
-            margin: auto;
+            width: 80%;
+            margin: 0 auto;
             padding: 20px;
         }
 
-        .header {
-            background-color: #f4f4f4;
-            padding: 10px 20px;
-            text-align: center;
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-            .header h1 {
-                margin: 0;
-                color: #333;
+            .card h2 {
+                font-size: 1.5em;
+                margin-top: 0;
             }
 
-        .content {
-            padding: 20px;
-            background-color: #fff;
+            .card p {
+                font-size: 1em;
+                color: #555555;
+            }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            font-size: 1em;
+            color: #ffffff;
+            background-color: #007BFF;
+            border: none;
             border-radius: 5px;
-            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
         }
 
-        .footer {
-            padding: 10px 20px;
-            background-color: #f4f4f4;
+            .button:hover {
+                background-color: #0056b3;
+            }
+
+        .premium-section {
+            background-color: #e0f7fa;
+            border: 1px solid #b2ebf2;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
             text-align: center;
         }
+
+            .premium-section h2 {
+                font-size: 1.5em;
+                color: #007BFF;
+            }
+
+            .premium-section p {
+                font-size: 1em;
+                color: #007BFF;
+            }
+
+        .premium-button {
+            background-color: #ff9800;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+            .premium-button:hover {
+                background-color: #e68900;
+            }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Protyo Grant Newsletter</h1>
+        <h1>Grant Gov AI Newsletter</h1>
+        <p>Explore the various government grants available to support your projects. Click on the "Apply Now" button to proceed with the application process.</p>
+
+        <!-- Grant 1 -->
+        <div class="card">
+            <h2>Small Business Innovation Research (SBIR)</h2>
+            <p>The SBIR program encourages small businesses to engage in federal research and development with the potential for commercialization.</p>
+            <a href="https://www.sbir.gov/apply" class="button">Apply Now</a>
         </div>
-        <div class="content">
-            <p>Dear Subscriber,</p>
-            <p>This is a sample newsletter email template. You can customize it according to your needs.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consectetur, risus vel mattis tristique, tortor leo maximus libero, at finibus libero est vitae metus. Integer vestibulum lorem in nibh tempor, nec gravida ipsum fermentum. Fusce sit amet orci ultricies, tempor odio non, rutrum justo.</p>
-            <p>Integer eu tincidunt nisl. Quisque ac pretium libero. Nam consequat nisi eu justo gravida, sit amet luctus sem bibendum. Vivamus tincidunt libero at velit ultricies, vitae pharetra nisi bibendum. Nam bibendum lorem ac suscipit tempus.</p>
-            <p>Sincerely,</p>
-            <p>The Protyo Team</p>
+
+        <!-- Grant 2 -->
+        <div class="card">
+            <h2>Community Development Block Grant (CDBG)</h2>
+            <p>The CDBG program provides communities with resources to address a wide range of unique community development needs.</p>
+            <a href="https://www.hud.gov/program_offices/comm_planning/communitydevelopment/programs" class="button">Apply Now</a>
         </div>
-        <div class="footer">
-            <p>&copy; 2024 Protyo. All rights reserved.</p>
+
+        <!-- Grant 3 -->
+        <div class="card">
+            <h2>National Endowment for the Arts (NEA) Grants</h2>
+            <p>NEA grants support arts projects that celebrate our creativity and cultural heritage, invite mutual respect for differing beliefs and values, and enrich humanity.</p>
+            <a href="https://www.arts.gov/grants" class="button">Apply Now</a>
+        </div>
+
+        <!-- Grant 4 -->
+        <div class="card">
+            <h2>Environmental Protection Agency (EPA) Grants</h2>
+            <p>EPA grants support a variety of environmental programs and projects, including air quality, water protection, and environmental education.</p>
+            <a href="https://www.epa.gov/grants" class="button">Apply Now</a>
+        </div>
+
+        <!-- Grant 5 -->
+        <div class="card">
+            <h2>Department of Education Grants</h2>
+            <p>The Department of Education provides grants to improve education, support educators, and promote student achievement and preparation for global competitiveness.</p>
+            <a href="https://www.ed.gov/fund/grants-apply.html" class="button">Apply Now</a>
+        </div>
+
+        <!-- Premium Section -->
+        <div class="premium-section">
+            <h2>Go Premium for Higher Content Match</h2>
+            <p>Upgrade to our premium plan to receive more personalized and higher content match for your grant needs.</p>
+            <a href="https://your-premium-link.com" class="premium-button">Go Premium</a>
         </div>
     </div>
 </body>

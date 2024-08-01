@@ -49,7 +49,7 @@ namespace Protyo.DatabaseRefresh.Jobs
             public async void Execute(CancellationToken stoppingToken)
             {
 
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                _logger.LogInformation("Worker running (Mongo DB Sync Job) at: {time}", DateTimeOffset.Now);
 
                 var firstRun = true;
 
