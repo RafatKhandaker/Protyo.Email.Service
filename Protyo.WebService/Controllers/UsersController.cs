@@ -8,6 +8,7 @@ using Protyo.Utilities.Services;
 using Protyo.Utilities.Services.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Protyo.WebService.Controllers
 {
@@ -25,7 +26,8 @@ namespace Protyo.WebService.Controllers
                 ILogger<UsersController> logger,
                 IMongoService<UserDataObject> mongoService,
                 ObjectExtensionHelper objectExtension,
-                IConfigurationSetting configuration
+                IConfigurationSetting configuration,
+                Cache<long, UserDataObject> mongoDBCache
             )
         {
             _logger = logger;
@@ -34,7 +36,7 @@ namespace Protyo.WebService.Controllers
 
             ACCESS_TOKEN = configuration.appSettings["WebAccessToken"];
 
-            MongoDBCache = new Cache<long, UserDataObject>(
+            MongoDBCache = mongoDBCache.SetInstance(
                     () => objectExtension.ConvertMongoDBDocumentToDictionary(() => UpdateMongoDatabase()),
                     TimeSpan.FromMinutes(Convert.ToInt32(configuration.appSettings["Database:RefreshTimer"]))
                 );
@@ -44,7 +46,7 @@ namespace Protyo.WebService.Controllers
 
         [HttpGet("All")]
         public List<UserDataObject> GetAllUsers([FromHeader(Name = "access-token")] string token, [FromQuery] int page = 1, [FromQuery] int size = 100) =>
-            (token.Equals(ACCESS_TOKEN)) ? MongoDBCache.GetAll(page, size) : throw new Exception("Invalid Access Token!");
+            (token.Equals(ACCESS_TOKEN)) ? MongoDBCache.GetAll(page, size).ToList() : throw new Exception("Invalid Access Token!");
 
         [HttpPost("Update/User/Match")]
         public long UpdateUserGrantMatch([FromHeader(Name = "access-token")] string token, [FromBody] UserDataObject user) =>

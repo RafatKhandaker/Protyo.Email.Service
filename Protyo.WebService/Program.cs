@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MongoDB.Bson;
 using Protyo.EmailSubscriptionService.Helper;
 using Protyo.EmailSubscriptionService.Services;
 using Protyo.Utilities.Configuration.Contracts;
@@ -31,6 +32,9 @@ namespace Protyo.WebService
                     services.AddSingleton<IDynamoService, DynamoService>();
                     services.AddSingleton<IMongoService<GrantDataObject>, MongoService<GrantDataObject>>();
                     services.AddSingleton<IMongoService<UserDataObject>, MongoService<UserDataObject>>();
+                    services.AddSingleton<ListCache<GrantDataObject>, ListCache<GrantDataObject>>();
+                    services.AddSingleton<Cache<string, FormData>, Cache<string, FormData>>();
+                    services.AddSingleton<Cache<long, UserDataObject>, Cache<long, UserDataObject>>();
                     services.AddSingleton(typeof(GoogleSheetsHelper));
                     services.AddScoped(typeof(ObjectExtensionHelper));
                     services.AddScoped(typeof(ItemsMapper));

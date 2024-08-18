@@ -11,14 +11,17 @@ namespace Protyo.Utilities.Services
     public class Cache<X,Y>
     {
         public Dictionary<X, Y> CacheStorage { get; set; }
-        private readonly Func<Dictionary<X, Y>> _dataRetriever;
-        private readonly TimeSpan _refreshInterval;
-        private readonly Timer _refreshTimer;
+        private Func<Dictionary<X, Y>> _dataRetriever;
+        private TimeSpan _refreshInterval;
+        private Timer _refreshTimer;
 
         private ObjectExtensionHelper Helper;
 
-        public Cache(Func<Dictionary<X, Y>> dataRetriever, TimeSpan refreshInterval)
+      
+        public Cache<X, Y> SetInstance(Func<Dictionary<X, Y>> dataRetriever, TimeSpan refreshInterval)
         {
+            if (CacheStorage != null) return this;
+
             CacheStorage = dataRetriever();
             Helper = new ObjectExtensionHelper();
 
@@ -26,8 +29,9 @@ namespace Protyo.Utilities.Services
             _refreshInterval = refreshInterval;
 
             _refreshTimer = new Timer(RefreshCache, null, TimeSpan.Zero, _refreshInterval);
-        }
 
+            return this;
+        }
         public Y Get(X key)
         {
             lock (CacheStorage)
@@ -39,10 +43,10 @@ namespace Protyo.Utilities.Services
             }
         }
 
-        public List<Y> GetAll(int page, int size)
+        public IEnumerable<Y> GetAll(int page, int size)
         {
             lock (CacheStorage)
-                return CacheStorage.Select(s=> s.Value).Skip((page -1)*size).Take(size).ToList();
+                return CacheStorage.Values.ToList().Skip((page - 1) * size).Take(size);
         }
 
         private void RefreshCache(object state)

@@ -23,7 +23,7 @@ namespace Protyo.EmailSubscriptionService.Jobs
         private string SHEET_NAME;
         private string SHEET_VALUES;
 
-        private readonly string PathToHtml;
+        private string PathToHtml;
         public SubscriberJob(
                 IEmailService emailService,
                 GoogleSheetsHelper googleSheetsHelper,
@@ -71,6 +71,7 @@ namespace Protyo.EmailSubscriptionService.Jobs
 
             //  _emailService.emailListing = googleSheetValues.Select(s => s.email).Skip(1).ToList();
             _emailService.emailListing = new string[] { "rafat.khandaker@gmail.com", "aleef@protyo.com", "mbarnett@protyo.com", "dbennett@protyo.com", "epetersen@protyo.com" };
+
 
             _emailService.sendHtmlFromFilePath("Test Grant System", PathToHtml);
 

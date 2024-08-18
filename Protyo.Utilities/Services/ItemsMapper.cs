@@ -14,22 +14,25 @@ namespace Protyo.EmailSubscriptionService.Services
             var items = new List<FormData>();
             foreach (var value in values)
             {
-                FormData item = new()
+                if (value.Count > 0)
                 {
-                    timestamp = value[0].ToString(),
-                    companyName = value[1].ToString(),
-                    companyWebsite = value[2].ToString(),
-                    yourName = value[3].ToString(),
-                    email = value[4].ToString(),
-                    address = value[5].ToString(),
-                    phoneNumber = value[6].ToString(),
-                    organizationProductService = value[7].ToString(),
-                    organizationMissionGoals = value[8].ToString(),
-                    organizationGrants = value[9].ToString(),
-                    grantPurpose = value[10].ToString(),
+                    FormData item = new()
+                    {
+                        timestamp = value[0].ToString(),
+                        companyName = value[1].ToString(),
+                        companyWebsite = value[2].ToString(),
+                        yourName = value[3].ToString(),
+                        email = value[4].ToString(),
+                        address = value[5].ToString(),
+                        phoneNumber = value[6].ToString(),
+                        organizationProductService = value[7].ToString(),
+                        organizationMissionGoals = value[8].ToString(),
+                        organizationGrants = value[9].ToString(),
+                        grantPurpose = value[10].ToString(),
 
-                };
-                items.Add(item);
+                    };
+                    items.Add(item);
+                }
             }
             return items;
         }

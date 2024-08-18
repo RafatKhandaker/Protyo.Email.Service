@@ -56,6 +56,7 @@ namespace Protyo.DatabaseRefresh.Jobs
                                                                     .SendRequest()
                                                                         .Result.Content.ReadAsStringAsync().Result );
             formDataResonse.ForEach(form =>{
+                    
                     try { 
                         _mongoService.Update( Builders<UserDataObject>.Filter.Eq(p => p.email, form.email),
                                 Builders<UserDataObject>.Update.Set(p => p.name, form.yourName)

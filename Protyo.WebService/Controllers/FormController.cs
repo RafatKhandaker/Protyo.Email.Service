@@ -9,6 +9,7 @@ using Protyo.Utilities.Models;
 using Protyo.Utilities.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Protyo.WebService.Controllers
 {
@@ -33,7 +34,8 @@ namespace Protyo.WebService.Controllers
                   IConfigurationSetting configuration,
                   ObjectExtensionHelper objectExtension,
                   GoogleSheetsHelper googleSheetsHelper,
-                  ItemsMapper itemsMapper
+                  ItemsMapper itemsMapper,
+                  Cache<string, FormData> googleSheetsCache
             )
         {
             _logger = logger;
@@ -47,7 +49,7 @@ namespace Protyo.WebService.Controllers
             SHEET_COUNT = 0;
             PREV_SHEET_COUNT = 0;
 
-            GoogleSheetsCache = new Cache<string, FormData>(
+            GoogleSheetsCache = googleSheetsCache.SetInstance(
                     () => objectExtension.ConvertGoogleSheetsToDictionary(() => UpdateGoogleSheets()),
                     TimeSpan.FromMinutes(Convert.ToInt32(configuration.appSettings["GoogleAppSettings:RefreshTimer"]))
                 );
@@ -61,7 +63,7 @@ namespace Protyo.WebService.Controllers
 
         [HttpGet("All")]
         public List<FormData> GetAllFormData([FromHeader(Name = "access-token")] string token, [FromQuery] int page = 1, [FromQuery] int size = 100) =>
-            (token.Equals(ACCESS_TOKEN)) ? GoogleSheetsCache.GetAll(page, size) : throw new Exception("Invalid Access Token!");
+            (token.Equals(ACCESS_TOKEN)) ? GoogleSheetsCache.GetAll(page, size).ToList() : throw new Exception("Invalid Access Token!");
 
         [HttpDelete("Delete")]
         public string DeleteAllFormData([FromHeader(Name = "access-token")] string token){

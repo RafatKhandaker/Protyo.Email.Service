@@ -60,6 +60,23 @@ namespace Protyo.Utilities.Helper
             
             return dictionaryGrantObjects;
         }
+        public Dictionary<int, BsonDocument> ConvertMongoDBDocumentToDictionary(Func<List<BsonDocument>> mongoDocumentRetriever)
+        {
+            var dictionaryGrantObjects = new Dictionary<int, BsonDocument>();
+            foreach (var document in mongoDocumentRetriever())
+                dictionaryGrantObjects.Add(document["_id"].AsInt32, document);
+
+            return dictionaryGrantObjects;
+        }
+
+        public Dictionary<int, RawBsonDocument> ConvertMongoDBDocumentToDictionary(Func<List<RawBsonDocument>> mongoDocumentRetriever)
+        {
+            var dictionaryGrantObjects = new Dictionary<int, RawBsonDocument>();
+            foreach (var document in mongoDocumentRetriever())
+                dictionaryGrantObjects.Add(document.ToBsonDocument()["_id"].AsInt32, document);
+
+            return dictionaryGrantObjects;
+        }
 
         public Dictionary<long, UserDataObject> ConvertMongoDBDocumentToDictionary(Func<List<UserDataObject>> mongoDocumentRetriever)
         {
