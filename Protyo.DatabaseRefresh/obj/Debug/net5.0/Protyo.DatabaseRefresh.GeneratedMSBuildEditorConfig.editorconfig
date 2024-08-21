@@ -7,4 +7,4 @@ build_property.PublishSingleFile =
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
 build_property.RootNamespace = Protyo.DatabaseRefresh
-build_property.ProjectDir = C:\Users\Red Twizzler\source\repos\Protyo.EmailSubscriptionService\Protyo.DatabaseRefresh\
+build_property.ProjectDir = C:\source\repos\MailingListForGrantMatch\Protyo.DatabaseRefresh\
