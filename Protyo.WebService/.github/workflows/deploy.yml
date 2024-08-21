@@ -1,0 +1,63 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '5.0.x'  # Or the version you are using
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish --configuration Release --output ./out
+
+      - name: Deploy to EC2 IIS
+        run: |
+          $script = @'
+          param (
+              [string]$instanceIp = "ec2-3-86-80-232.compute-1.amazonaws.com",
+              [string]$appName = "ProtyoWebService",
+              [string]$artifactPath = ".\out",
+              [string]$iisPath = "C:\inetpub\wwwroot"
+          )
+          $session = New-PSSession -HostName $instanceIp -UserName "Administrator" -KeyFilePath "$env:AWS_SSH_KEY"
+          Invoke-Command -Session $session -ScriptBlock {
+              param($appName, $artifactPath, $iisPath)
+              $publishDir = Join-Path $iisPath $appName
+              if (-Not (Test-Path $publishDir)) {
+                  New-Item -Path $publishDir -ItemType Directory
+              }
+              # Clear the existing content in the directory (optional)
+              Remove-Item -Recurse -Force -Path $publishDir\*
+              # Copy the new published files
+              Copy-Item -Path $artifactPath\* -Destination $publishDir -Recurse -Force
+              Import-Module WebAdministration
+              if (-Not (Test-Path "IIS:\Sites\$appName")) {
+                  New-Website -Name $appName -Port 443 -PhysicalPath $publishDir -ApplicationPool "DefaultAppPool"
+              }
+              else {
+                  Set-ItemProperty "IIS:\Sites\$appName" -Name physicalPath -Value $publishDir
+                  Restart-WebAppPool "DefaultAppPool"
+              }
+          } -ArgumentList $appName, $artifactPath, $iisPath
+          '@
+          Invoke-Expression $script
+        env:
+          AWS_SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
+          EC2_INSTANCE_IP: ${{ secrets.EC2_INSTANCE_IP }}
